@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include 'common/header.html' %}
+<body>
+
+<!-- Navbar -->
+{% include 'common/topbar.html' %}
+
+<!-- Header -->
+<div class="dash-header">
+    <div class="container-fluid px-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2>근로자 업무 현황 대시보드</h2>
+                <p class="mb-0 text-white-50">담당 부서: IT 지원팀 / 경영지원팀</p>
+            </div>
+            <a href="/new_job" class="btn btn-primary bg-white text-dark border-0 fw-bold px-4 rounded-pill">
+                <i class="fas fa-plus me-2"></i>새 업무 할당
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container-fluid px-4 pb-5">
+    <!-- Stats -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <a href="/workers" class="text-decoration-none d-block" style="color:inherit">
+            <div class="stat-card">
+                <div class="stat-icon bg-blue-light"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <p>관리 중인 근로자</p>
+                    <h3>{{ worker_count }}<span>명</span></h3>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a href="/progress_jobs" class="text-decoration-none d-block" style="color:inherit">
+            <div class="stat-card">
+                <div class="stat-icon bg-purple-light"><i class="fas fa-tasks"></i></div>
+                <div class="stat-info">
+                    <p>진행 중인 업무</p>
+                    <h3>{{ progress_count }}<span>건</span></h3>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a href="/completed_jobs" class="text-decoration-none d-block" style="color:inherit">
+            <div class="stat-card">
+                <div class="stat-icon bg-green-light"><i class="fas fa-clipboard-check"></i></div>
+                <div class="stat-info">
+                    <p>완료 업무 누계</p>
+                    <h3>{{ review_count }}<span>건</span></h3>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <a href="/as_manage" class="text-decoration-none d-block" style="color:inherit">
+            <div class="stat-card border-danger">
+                <div class="stat-icon bg-red-light"><i class="fas fa-hands-helping"></i></div>
+                <div class="stat-info">
+                    <p>미처리 지원 요청</p>
+                    <h3 class="text-danger">{{ pending_as_count }}<span>건</span></h3>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left: Task Monitoring Table -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="content-card">
+                <div class="card-title-wrap">
+                    <h5><i class="fas fa-list-alt me-2 text-primary"></i>실시간 업무 진행 현황</h5>
+                    <form action="/manage_dash" method="GET" class="d-flex gap-2">
+                        <select class="form-select form-select-sm w-auto" name="status_filter" onchange="this.form.submit()">
+                            <option value="" {% if not status_filter %}selected{% endif %}>전체 상태</option>
+                            <option value="urgent" {% if status_filter=='urgent' %}selected{% endif %}>긴급</option>
+                            <option value="progress" {% if status_filter=='progress' %}selected{% endif %}>진행중</option>
+                            <option value="wait" {% if status_filter=='wait' %}selected{% endif %}>대기</option>
+                        </select>
+                        <input type="text" class="form-control form-control-sm w-auto" name="q" value="{{ q }}" placeholder="근로자/업무 검색...">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover">
+                        <thead>
+                            <tr>
+                                <th>근로자</th>
+                                <th>업무명</th>
+                                <th>상태</th>
+                                <th>마감 기한</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in recent_jobs %}
+                            <tr>
+                                <td>
+                                    <div class="worker-info">
+                                        <img src="https://ui-avatars.com/api/?name={{ job.worker_name|replace(' ','+') }}&background=eef4fb&color=0056b3" alt="{{ job.worker_name }}">
+                                        <div>
+                                            <span class="worker-name">{{ job.worker_name }}</span>
+                                            <span class="worker-type">{{ job.worker_dept }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fw-bold text-dark">{{ job.title }}</td>
+                                <td><span class="status-badge {{ job.status_class }}" {% if job.status_style %}style="{{ job.status_style }}"{% endif %}>{{ job.status_label }}</span></td>
+                                <td class="{{ 'text-danger' if job.status == 'urgent' else '' }}">{{ job.due_label or '-' }}</td>
+                                <td>
+                                    <a href="/newarrived_jobs" class="btn btn-sm btn-light text-primary" title="메시지함"><i class="far fa-envelope"></i></a>
+                                    <a href="/job/{{ job.id }}" class="btn btn-sm btn-light" title="상세보기"><i class="fas fa-chevron-right"></i></a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">진행 중인 업무가 없습니다.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/progress_jobs" class="text-decoration-none fw-bold">전체 업무 보기 <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Support Requests & Quick Actions -->
+        <div class="col-xl-4 col-lg-5">
+            <!-- Urgent Support Requests -->
+            <div class="content-card border-danger border-opacity-25">
+                <div class="card-title-wrap mb-3">
+                    <h5 class="text-danger"><i class="fas fa-exclamation-circle me-2"></i>미처리 지원 요청 <span class="badge bg-danger rounded-pill ms-1">{{ pending_as_count }}</span></h5>
+                </div>
+
+                {% for req in pending_requests %}
+                <div class="support-item">
+                    <div class="support-header">
+                        <span class="support-title"><i class="fas fa-hands-helping me-1"></i> {{ req.title }}</span>
+                        <span class="support-time">{{ req.created_at[:10] }}</span>
+                    </div>
+                    <div class="support-desc">
+                        <strong>{{ req.requester_name }} ({{ req.requester_dept }})</strong><br>
+                        {{ req.details[:80] }}{% if req.details|length > 80 %}...{% endif %}
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/as_request/{{ req.id }}" class="btn btn-sm btn-danger flex-grow-1">요청 상세</a>
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-3 small">미처리 지원 요청이 없습니다.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-card">
+                <div class="card-title-wrap">
+                    <h5><i class="fas fa-bolt me-2 text-primary"></i>빠른 실행</h5>
+                </div>
+                <div class="d-grid gap-2">
+                    <a href="/workers" class="btn btn-outline-primary text-start p-3 fw-bold">
+                        <i class="fas fa-users me-2"></i> 근로자 관리
+                    </a>
+                    <a href="/write_post" class="btn btn-outline-primary text-start p-3 fw-bold">
+                        <i class="fas fa-bullhorn me-2"></i> 공지사항 작성
+                    </a>
+                    <a href="/completed_jobs" class="btn btn-outline-primary text-start p-3 fw-bold">
+                        <i class="fas fa-file-alt me-2"></i> 완료 업무 내역 보기
+                    </a>
+                    <a href="/approval_pending" class="btn btn-outline-primary text-start p-3 fw-bold">
+                        <i class="fas fa-stamp me-2"></i> 결재 대기 문서
+                    </a>
+                    <a href="/signup" class="btn btn-outline-primary text-start p-3 fw-bold">
+                        <i class="fas fa-user-plus me-2"></i> 신규 근로자 계정 생성
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "common/_footer.html" %}
+</body>
+</html>

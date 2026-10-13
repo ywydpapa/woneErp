@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include 'common/header.html' %}
+<body>
+
+<!-- Navbar -->
+{% include 'common/topbar.html' %}
+
+<!-- Header & Search -->
+<div class="header-dash">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2>무엇을 도와드릴까요?</h2>
+                <div class="search-form">
+                    <!-- 구글 검색 폼 적용 -->
+                    <form action="https://www.google.com/search" method="GET" target="_blank">
+                        <i class="fas fa-search icon"></i>
+                        <input name="q" type="text" placeholder="궁금한 내용을 검색해 보세요..." required>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services (Overlapping Cards) -->
+<div class="container services-section">
+    <div class="row justify-content-center g-4">
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <a href="/guide" class="service-card">
+                <i class="fas fa-book-open"></i>
+                <span>가이드 문서</span>
+            </a>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <a href="/faq" class="service-card">
+                <i class="far fa-question-circle"></i>
+                <span>자주 묻는 질문</span>
+            </a>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <a href="/inquiry" class="service-card">
+                <i class="fas fa-ticket-alt"></i>
+                <span>1:1 문의하기</span>
+            </a>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <a href="/community" class="service-card">
+                <i class="fas fa-users"></i>
+                <span>커뮤니티</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- About Section -->
+<div class="about-section mt-5">
+    <div class="container">
+        <div class="section-title">
+            <h4>Why Choose Us</h4>
+            <h2>모든 업무를 한 곳에서 관리하세요</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="about-block">
+                    <a href="/guide" class="service-card">
+                    <i class="fas fa-bolt icon"></i>
+                    <h4>빠른 설정</h4>
+                    <p class="text-muted">복잡한 과정 없이 몇 번의 클릭만으로 즉시 업무 환경을 구축하고 팀원들을 초대할 수 있습니다.</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="about-block">
+                    <a href="/guide" class="service-card">
+                    <i class="fas fa-shield-alt icon"></i>
+                    <h4>강력한 보안</h4>
+                    <p class="text-muted">엔터프라이즈급 보안 시스템을 통해 기업의 중요한 데이터와 고객 정보를 안전하게 보호합니다.</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="about-block">
+                    <a href="/guide" class="service-card">
+                    <i class="fas fa-chart-line icon"></i>
+                    <h4>통계 및 분석</h4>
+                    <p class="text-muted">실시간 대시보드와 상세한 리포트를 통해 업무 효율성을 한눈에 파악하고 개선할 수 있습니다.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Knowledge Base Section -->
+<div class="knowledge-base">
+    <div class="container">
+        <div class="section-title">
+            <h4>Knowledge Base</h4>
+            <h2>도움말 카테고리</h2>
+        </div>
+        <div class="row">
+            <!-- Category 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="category-block">
+                    <h3><a href="/guide">시작하기 <span>12</span></a></h3>
+                    <ul class="list-unstyled">
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 계정 생성 및 로그인 방법</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 초기 환경 설정 가이드</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 팀원 초대 및 권한 부여</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 프로필 및 알림 설정</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Category 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="category-block">
+                    <h3><a href="/guide">결제 및 구독 <span>8</span></a></h3>
+                    <ul class="list-unstyled">
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 요금제 변경 및 업그레이드</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 결제 수단 등록 및 변경</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 세금계산서 발행 요청</a></li>
+                        <li><a href="/guide"><i class="far fa-file-alt"></i> 환불 정책 및 규정</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Category 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="category-block">
+                    <h3><a href="/faq">문제 해결 <span>24</span></a></h3>
+                    <ul class="list-unstyled">
+                        <li><a href="/faq"><i class="far fa-file-alt"></i> 비밀번호를 분실했을 때</a></li>
+                        <li><a href="/faq"><i class="far fa-file-alt"></i> 페이지 로딩이 느린 경우</a></li>
+                        <li><a href="/faq"><i class="far fa-file-alt"></i> 이메일 알림이 오지 않을 때</a></li>
+                        <li><a href="/faq"><i class="far fa-file-alt"></i> 모바일 앱 연동 오류 해결</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fw-bold" id="loginModalLabel">로그인</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/login" method="post">
+                    <div class="mb-3 position-relative">
+                        <input type="text" name="username" class="form-control form-control-lg" placeholder="아이디 또는 이메일" required>
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <input type="password" name="password" class="form-control form-control-lg" placeholder="비밀번호" required>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label text-muted" for="rememberMe">로그인 유지</label>
+                        </div>
+                        <a href="/forgot_password" class="text-decoration-none" style="color: var(--primary-blue);">비밀번호 찾기</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom">로그인</button>
+                </form>
+                <div class="text-center mt-4">
+                    <span class="text-muted">계정이 없으신가요?</span> <a href="/signup" class="text-decoration-none fw-bold" style="color: var(--primary-blue);">회원가입</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "common/_footer.html" %}
+<!-- Bootstrap 5 JS Bundle -->
+</body>
+</html>
